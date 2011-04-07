@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Calendar Demo</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="src/calendar.css" />
+	<style>
+	html { height: 100%; }
+	body { background: #bbb; height: 100%; }
+	</style>
+</head>
+
+<body>
+
+<label for="date" class="show-calendar">Date</label>
+<input id="date" class="show-calendar" />
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script>
+<script src="src/calendar.js"></script>
+<script src="src/calendarswipe.jquery.js"></script>
+<script>
+	$(function(){
+		var c = new Calendar();
+		$("input.show-calendar").bind("focus", function(e) {
+			c.setValue(this);
+		});
+	});
+</script>
+
+
+</body>
+</html>

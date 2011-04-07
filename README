@@ -1,0 +1,79 @@
+jtCalendar - a touchable calendar using jQuery
+
+BASIC EXAMPLE:
+
+<link rel="stylesheet" href="src/calendar.css" />
+<sctipt src="/path/to/jquery-1.5.1.js"></script>
+<script src="/path/to/calendar.js"></script>
+<!-- optional but recommended -->
+<script src="/path/to/calendarswipe.jquery.js"></script>
+<script>
+jQuery(document).ready(function($){
+    var c = new Calendar();
+    $("input.jtCalendar").focus(function(){
+        c.setValue(this);
+    });
+});
+</script>
+
+ADVANCED:
+The setValue() method automatically binds the calendar to an input box. 
+The current value will be parsed and replaced with a new date. If you 
+want to specify your own behavior, you can take a more hands-on 
+approach.
+
+<!-- same script tags as before -->
+<script>
+    var c = new Calendar();
+    c.onSelect = function(date, event) {
+        // date is a javascript Date object
+        // event is a simple object -- set event.cancel = true
+        // to prevent the calendar from closing. You can also
+        // return false.
+    };
+    c.onCancel = function(event) {
+        // event is the same as onSelect. You can also return
+        // false to prevent the calendar from closing.
+    }
+    c.setClass = function(date) {
+        // date is a javascript Date that is about to have its cell 
+        // rendered. The value returned from this function will be added
+        // to the date's table cell to determine if it is highlighted
+        // or disabled. You can use whatever class names you want, but
+        // the special class "disabled" will prevent that date from 
+        // being selected. The current day automatically gets a "today"
+        // class added, and dates outside of the current month have "x".
+        // By default "selected" will highlight the date, but you can
+        // style classes however you want. For example:
+        if (date.getDay() === 0 || date.getDay() === 6) {
+            return "weekend";
+        }
+        if (date.getMonth() === 3 && date.getDate() === 5) {
+            return "birthday"
+        }
+		// NOTE: setClass() is also called for the "today" button on the
+		// bottom of the calendar popup.
+    }
+
+    // to show the calendar, set the current view and call show()
+    // standard day view:
+    c.showDays(date.getFullYear(), date.getMonth());
+    // or start with the month picker,
+    c.showMonths(date.getFullYear());
+    // year picker,
+    c.showYears(date.getFullYear());
+    // or decade picker.
+    c.showDecades(date.getFullYear());
+
+    // Now show the popup.
+    c.show({top: 0, left:0});
+    // When you are done, close it (it will be closed automatically when
+    // you click on a date.
+    c.hide();
+    // Or remove it completely. Once it is destroyed, you can no longer
+    // show() the popup. Only use this if you re-create the calendar 
+    // every time it is used.
+    c.destroy();
+
+    // That's it!
+</script>
